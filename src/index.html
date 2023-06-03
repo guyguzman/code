@@ -189,14 +189,35 @@
 
 
 
-            <pre><code language=""></code></pre>
-            <pre><code language=""></code></pre>
-            <pre><code language=""></code></pre>
-            <pre><code language=""></code></pre>
-            <pre><code language=""></code></pre>
+            <pre><code class="">
+                function fetchFile() {
+                fetch("./json/sample.json")
+                .then(response => response.json())
+                .then(json => {
+                let person = json[0];
+                let beautify = JSON.stringify(json[0], null, 4);
+                let output;
+                output = "JAVASCRIPT OBJECT (direct)" + "\n";
+                output = output + "-----------------" + "\n";
+                output = output + person.name + "\n";
+                output = output + person.age + "\n";
+                output = output + person.company + "\n" + "\n";
+                output = output + "JSON (stringify)" + "\n";
+                output = output + "-----------------" + "\n";
+                output = output + beautify;
+                file.innerHTML = output;
+                })
+                }
+            </code></pre>
+            <pre><code class=""></code></pre>
+            <pre><code class=""></code></pre>
+            <pre><code class=""></code></pre>
+            <pre><code class=""></code></pre>
             <div class="code">
                 <div class="codeTitle">CSS Root</div>
-                <div class="codeBlock"></div>
+                <div class="codeBlock">
+                    <pre><code class="language-javascript"></code></pre>
+                </div>
             </div>
         </div>
     </div>
