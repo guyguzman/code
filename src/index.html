@@ -153,7 +153,7 @@
             <div class="code">
                 <div class="codeTitle">Javascript Load Event</div>
                 <div class="codeBlock">
-                    <pre><code class="language-js">
+                    <pre><code id="codeHeightWidth" class="language-js">
 
             import { setWidthHeight } from "./js/common.js";
 
@@ -182,39 +182,33 @@
             &lt;script defer src="fontawesome/js/thin.js"&gt;&lt;/script&gt;
 
             &lt;script defer src="fontawesome/js/fontawesome.js"&gt;&lt;/script&gt;
-
             </code></pre>
                 </div>
             </div>
 
-
-
-            <pre><code class="">
-                function fetchFile() {
-                fetch("./json/sample.json")
-                .then(response => response.json())
-                .then(json => {
-                let person = json[0];
-                let beautify = JSON.stringify(json[0], null, 4);
-                let output;
-                output = "JAVASCRIPT OBJECT (direct)" + "\n";
-                output = output + "-----------------" + "\n";
-                output = output + person.name + "\n";
-                output = output + person.age + "\n";
-                output = output + person.company + "\n" + "\n";
-                output = output + "JSON (stringify)" + "\n";
-                output = output + "-----------------" + "\n";
-                output = output + beautify;
-                file.innerHTML = output;
-                })
-                }
-            </code></pre>
-            <pre><code class=""></code></pre>
-            <pre><code class=""></code></pre>
-            <pre><code class=""></code></pre>
-            <pre><code class=""></code></pre>
             <div class="code">
-                <div class="codeTitle">CSS Root</div>
+                <div class="codeTitle">Fetch File</div>
+                <div class="codeBlock">
+                    <pre><code class="language-js">
+                    function fetchFile() {
+                      fetch("./json/sample.json")
+                      .then(response => response.json())
+                      .then(json => {
+                        let firstObject = json[0];
+                        let beautifyObject = JSON.stringify(firstObject, null, 4);                    
+                        })
+                    }
+                    </code></pre>
+                </div>
+            </div>
+            <div class="code">
+                <div class="codeTitle">New</div>
+                <div class="codeBlock">
+                    <pre><code class="language-javascript"></code></pre>
+                </div>
+            </div>
+            <div class="code">
+                <div class="codeTitle">New</div>
                 <div class="codeBlock">
                     <pre><code class="language-javascript"></code></pre>
                 </div>
@@ -225,13 +219,33 @@
     <script type="module">
         import { setWidthHeight } from "./js/common.js";
 
+        let elementCodeHeightWidth;
+
         window.onload = function () {
+            elementCodeHeightWidth = document.getElementById("codeHeightWidth");
+
             setWidthHeight();
 
             window.addEventListener("resize", () => {
                 setWidthHeight();
             });
+
+            getTextFile("heightWidth.js");
         };
+
+        function getTextFile(filename) {
+            let period = filename.indexOf(".");
+            let fileExtension = filename.substring(period + 1, filename.length);
+            fetch(`./snippets/${filename}`)
+                .then(response => response.text())
+                .then(textString => {
+                    console.log(textString);
+                    elementCodeHeightWidth.innerHTML = textString;
+                    var block = document.getElementById('codeHeightWidth')
+                    Prism.highlightElement(block);
+                });
+        }
+
     </script>
     <script src="./js/prism.js"></script>
 </body>
