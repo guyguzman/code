@@ -153,18 +153,7 @@
             <div class="code">
                 <div class="codeTitle">Javascript Load Event</div>
                 <div class="codeBlock">
-                    <pre><code id="codeHeightWidth" class="language-js">
-
-            import { setWidthHeight } from "./js/common.js";
-
-            window.onload = function () {
-                setWidthHeight();
-
-                window.addEventListener("resize", () => {
-                    setWidthHeight();
-                });
-
-</code></pre>
+                    <pre><code id="codeHeightWidth" class="language-js"></code></pre>
                 </div>
             </div>
 
@@ -230,10 +219,10 @@
                 setWidthHeight();
             });
 
-            getTextFile("heightWidth.js");
+            processTextFile("heightWidth.js", "codeHeightWidth");
         };
 
-        function getTextFile(filename) {
+        function processTextFile(filename, elementName) {
             let period = filename.indexOf(".");
             let fileExtension = filename.substring(period + 1, filename.length);
             fetch(`./snippets/${filename}`)
@@ -241,8 +230,17 @@
                 .then(textString => {
                     console.log(textString);
                     elementCodeHeightWidth.innerHTML = textString;
-                    var block = document.getElementById('codeHeightWidth')
+                    var block = document.getElementById(elementName);
+                    elementName.class.add(`language-${fileExtension}`);
                     Prism.highlightElement(block);
+                });
+        }
+
+        async function getTextFile(filename) {
+            fetch(`./snippets/${filename}`)
+                .then(response => response.text())
+                .then(textString => {
+                    return textString;
                 });
         }
 

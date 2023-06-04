@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "RobotoFlex";
+  src: url("fonts/Roboto_Flex/RobotoFlex-VariableFont_GRAD\,XTRA\,YOPQ\,YTAS\,YTDE\,YTFI\,YTLC\,YTUC\,opsz\,slnt\,wdth\,wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "RobotoMono";
+  src: url("fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
+}
