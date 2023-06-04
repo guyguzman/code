@@ -62,13 +62,13 @@
             color: #808080;
         }
 
-        .guy {
+        .codeExamples {
             width: clamp(340px, 90vw, 1800px);
             background-color: #d0d2d5;
             font-size: 18px;
         }
 
-        .code {
+        .codeSection {
             width: 100%;
             height: 100%;
             display: grid;
@@ -114,94 +114,15 @@
 
 <body>
     <div class="landingPage">
-        <div class="guy">
-            <div class="code">
-                <div class="codeTitle">CSS Root</div>
-                <div class="codeBlock">
-                    <pre><code class="language-css">
-:root {
---fullHeight: calc(var(--vh, 1vh) * 100);
---fullWidth: calc(var(--vw, 1vw) * 100);
-}
-</code></pre>
-                </div>
-            </div>
+        <div id="codeExamples" class="codeExamples">
 
-            <div class="code">
-                <div class="codeTitle">CSS font-face</div>
-                <div class="codeBlock">
-                    <pre><code class="language-css">
-    @font-face {
-    font-family: 'RobotoFlex';
-    src: url('fonts/Roboto_Flex/RobotoFlex-VariableFont_GRAD\,XTRA\,YOPQ\,YTAS\,YTDE\,YTFI\,YTLC\,YTUC\,opsz\,slnt\,wdth\,wght.ttf')
-    format("truetype");
-    }
-    
-    @font-face {
-    font-family: 'RobotoMono';
-    src: url("fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf") format("truetype");
-    }
-    
-    @font-face {
-    font-family: 'Montserrat';
-    src: url('fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format("truetype");
-    }
-</code></pre>
-                </div>
-            </div>
-
-            <div class="code">
-                <div class="codeTitle">Javascript Load Event</div>
-                <div class="codeBlock">
-                    <pre><code id="codeHeightWidth" class="language-js"></code></pre>
-                </div>
-            </div>
-
-            <div class="code">
-                <div class="codeTitle">Font Awesome</div>
-                <div class="codeBlock">
-                    <pre class="language-markup" style="overflow:auto" tabindex="0"><code class="language-markup">
-            &lt;script defer src="fontawesome/js/brands.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/duotone.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/light.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/regular.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/sharp-regular.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/sharp-solid.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/solid.js"&gt;&lt;/script&gt;
-            &lt;script defer src="fontawesome/js/thin.js"&gt;&lt;/script&gt;
-
-            &lt;script defer src="fontawesome/js/fontawesome.js"&gt;&lt;/script&gt;
-            </code></pre>
-                </div>
-            </div>
-
-            <div class="code">
-                <div class="codeTitle">Fetch File</div>
-                <div class="codeBlock">
-                    <pre><code class="language-js">
-                    function fetchFile() {
-                      fetch("./json/sample.json")
-                      .then(response => response.json())
-                      .then(json => {
-                        let firstObject = json[0];
-                        let beautifyObject = JSON.stringify(firstObject, null, 4);                    
-                        })
-                    }
-                    </code></pre>
-                </div>
-            </div>
-            <div class="code">
+            <!-- <div class="codeSection">
                 <div class="codeTitle">New</div>
                 <div class="codeBlock">
                     <pre><code class="language-javascript"></code></pre>
                 </div>
-            </div>
-            <div class="code">
-                <div class="codeTitle">New</div>
-                <div class="codeBlock">
-                    <pre><code class="language-javascript"></code></pre>
-                </div>
-            </div>
+            </div> -->
+
         </div>
     </div>
 
@@ -209,6 +130,7 @@
         import { setWidthHeight } from "./js/common.js";
 
         let elementCodeHeightWidth;
+        let elementCodeExamples;
 
         window.onload = function () {
             elementCodeHeightWidth = document.getElementById("codeHeightWidth");
@@ -219,20 +141,44 @@
                 setWidthHeight();
             });
 
-            processTextFile("heightWidth.js", "codeHeightWidth");
+            elementCodeExamples = document.getElementById("codeExamples");
+            processTextFile("heightWidth.js", "Set Height and Width");
+            processTextFile("fontFace.css", "@FontFace");
+            processTextFile("fetchTextFile.js", "fetch() Text File");
+            processTextFile("root.css", "CSS :root{}");
+            processTextFile("fontAwesome.html", "Font Awesome");
+            processTextFile("fetchJsonFile.js", "fetch() JSON File");
+            processTextFile("common.js", "Common JS File");
         };
 
-        function processTextFile(filename, elementName) {
+        function processTextFile(filename, title) {
             let period = filename.indexOf(".");
             let fileExtension = filename.substring(period + 1, filename.length);
             fetch(`./snippets/${filename}`)
                 .then(response => response.text())
                 .then(textString => {
-                    console.log(textString);
-                    elementCodeHeightWidth.innerHTML = textString;
-                    var block = document.getElementById(elementName);
-                    elementName.class.add(`language-${fileExtension}`);
-                    Prism.highlightElement(block);
+
+                    let elementCodeSection = document.createElement("div");
+                    let elementCodeTitle = document.createElement("div");
+                    let elementCodeBlock = document.createElement("div");
+                    let elementPre = document.createElement("pre");
+                    let elementCode = document.createElement("code");
+
+                    elementCodeTitle.classList.add("codeTitle");
+                    elementCodeBlock.classList.add("codeBlock");
+                    elementCodeSection.classList.add("codeSection");
+
+                    elementCodeTitle.innerHTML = title;
+                    elementCode.classList.add(`language-${fileExtension}`);
+                    elementCode.innerHTML = textString;
+
+                    elementPre.appendChild(elementCode);
+                    elementCodeBlock.appendChild(elementPre);
+                    elementCodeSection.appendChild(elementCodeTitle);
+                    elementCodeSection.appendChild(elementCodeBlock);
+                    elementCodeExamples.appendChild(elementCodeSection);
+                    Prism.highlightElement(elementCode);
+
                 });
         }
 
